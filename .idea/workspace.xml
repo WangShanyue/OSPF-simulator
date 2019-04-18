@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8b2db819-93b0-47d1-a7c5-f75d2294462a" name="Default Changelist" comment="" />
+    <list default="true" id="8b2db819-93b0-47d1-a7c5-f75d2294462a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Socket/Threads.py" beforeDir="false" afterPath="$PROJECT_DIR$/Socket/Threads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Socket/communicate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Socket/communicate.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/OSPF_simulation$communicate__1_.coverage" NAME="communicate (1) Coverage Results" MODIFIED="1555514001802" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Socket" />
+    <SUITE FILE_PATH="coverage/OSPF_simulation$communicate__1_.coverage" NAME="communicate (1) Coverage Results" MODIFIED="1555629523555" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Socket" />
     <SUITE FILE_PATH="coverage/OSPF_simulation$communicate.coverage" NAME="communicate Coverage Results" MODIFIED="1555486075140" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/socket" />
     <SUITE FILE_PATH="coverage/OSPF_simulation$Threads__1_.coverage" NAME="Threads (1) Coverage Results" MODIFIED="1555498051917" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Socket" />
     <SUITE FILE_PATH="coverage/OSPF_simulation$Threads.coverage" NAME="Threads Coverage Results" MODIFIED="1555497990757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/socket" />
@@ -22,8 +26,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Socket/communicate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+            <state relative-caret-position="448">
+              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
               <folding>
                 <element signature="e#24#39#0" expanded="true" />
               </folding>
@@ -34,8 +38,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Socket/Threads.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+            <state relative-caret-position="-1113">
+              <caret line="41" column="30" lean-forward="true" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -57,6 +61,9 @@
       <find>bind</find>
     </findStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -65,8 +72,8 @@
         <option value="$PROJECT_DIR$/socket/communicate.py" />
         <option value="$PROJECT_DIR$/socket/Threads.py" />
         <option value="$PROJECT_DIR$/Socket/__init__.py" />
-        <option value="$PROJECT_DIR$/Socket/communicate.py" />
         <option value="$PROJECT_DIR$/Socket/Threads.py" />
+        <option value="$PROJECT_DIR$/Socket/communicate.py" />
       </list>
     </option>
   </component>
@@ -231,22 +238,23 @@
       <updated>1555400318846</updated>
       <workItem from="1555400320478" duration="12217000" />
       <workItem from="1555476526078" duration="21266000" />
+      <workItem from="1555574625053" duration="18853000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33483000" />
+    <option name="totallyTimeSpent" value="52336000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49656752" visible="true" weight="0.14145234" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49656752" visible="true" weight="0.14372164" />
       <window_info id="Structure" order="1" sideWeight="0.5034325" side_tool="true" weight="0.14145234" />
       <window_info id="Favorites" order="2" sideWeight="0.5008183" side_tool="true" weight="0.13918306" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23895253" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.28360656" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.21440262" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -299,15 +307,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../python/Lib/multiprocessing/process.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="296" selection-start-line="296" selection-end-line="296" />
+        <state relative-caret-position="409">
+          <caret line="315" column="64" selection-start-line="315" selection-start-column="64" selection-end-line="315" selection-end-column="64" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Socket/communicate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+        <state relative-caret-position="448">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
           <folding>
             <element signature="e#24#39#0" expanded="true" />
           </folding>
@@ -316,8 +324,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Socket/Threads.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+        <state relative-caret-position="-1113">
+          <caret line="41" column="30" lean-forward="true" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
