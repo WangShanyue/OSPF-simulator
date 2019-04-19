@@ -5,14 +5,16 @@ from multiprocessing import Process
 import os
 import socket
 import Socket.Threads
-
+import queue
 delay = 1
+
+
 class MyProcess(Process):
     linklist=[]#链路状态表
     link=[]#自身链路状态
     id=0#
     name=''
-
+    q = queue.Queue(maxsize=1)  # 用来存放Linklist
     def __init__(self,id,name,link):
         Process.__init__(self)
         self.link=link
@@ -22,16 +24,22 @@ class MyProcess(Process):
 
     def run(self):
         global delay
+        node_num=Socket.Threads.node_num
+        self.linklist = [[0 for col in range(node_num)] for row in range(node_num)]
         for i in range(len(self.link)):
-            #print("123123123",self.link[i][0][1])
-            self.linklist.append([self.link[i][0][1], self.link[i][1]])  # 获得链路状态表
+            self.linklist[self.id][self.link[i][0][1]]=self.link[i][1]
 
-        s=Socket.Threads.ListenThread('localhost', Socket.Threads.BASE_PORT + self.id,self.linklist)#服务端接收数据
+        print("init link list",self.linklist)
+        s=Socket.Threads.ListenThread('localhost', Socket.Threads.BASE_PORT + self.id,self.linklist,self.q)#服务端接收数据
         s.start()
         while True:
-            time.sleep(1)
             c=Socket.Threads.SendThread('localhost',Socket.Threads.BASE_PORT+self.id,self.link)
             c.start()
+            time.sleep(2)#等待接收完毕之后进行dj算法
+            self.linklist = self.q.get()
+            print("id={}  ".format(self.id), self.linklist)
+
+            time.sleep(10)#下次发送的延时
 
 
 
@@ -52,9 +60,9 @@ def main():
     print("主进程开始>>> pid={}".format(os.getpid()))
     route=[[[(0,1),100]],[[(1,0),100],[(1,2),100]],[[(2,1),100],[(2,3),100],[(2,4),100]],[[(3,2),100]],[[(4,2),100]]]#[[目标结点1，距离1]，[目标结点2，距离2]...]
     process_list=[]
-    for i in range(4):
+    for i in range(5):
         process_list.append(MyProcess(i,'Router{num}'.format(num=i),route[i]))
-    for i in range(4):
+    for i in range(5):
         process_list[i].start()
 
 
