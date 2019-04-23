@@ -1,13 +1,12 @@
 # -*- coding:utf-8 -*-
 
-import os, time
+import time
 from multiprocessing import Process
 import os
-import socket
 import Socket.Threads
 import queue
 delay = 1
-
+import algorithm.dijkstra
 
 class MyProcess(Process):
     linklist=[]#链路状态表
@@ -25,20 +24,21 @@ class MyProcess(Process):
     def run(self):
         global delay
         node_num=Socket.Threads.node_num
-        self.linklist = [[0 for col in range(node_num)] for row in range(node_num)]
+        self.linklist = [[algorithm.dijkstra.INF for col in range(node_num)] for row in range(node_num)]
         for i in range(len(self.link)):
             self.linklist[self.id][self.link[i][0][1]]=self.link[i][1]
 
-        print("init link list",self.linklist)
+     #   print("init link list",self.linklist)
         s=Socket.Threads.ListenThread('localhost', Socket.Threads.BASE_PORT + self.id,self.linklist,self.q)#服务端接收数据
         s.start()
         while True:
             c=Socket.Threads.SendThread('localhost',Socket.Threads.BASE_PORT+self.id,self.link)
             c.start()
             time.sleep(2)#等待接收完毕之后进行dj算法
-            self.linklist = self.q.get()
-            print("id={}  ".format(self.id), self.linklist)
-
+            if(not  self.q.empty()):#接收数据
+                self.linklist = self.q.get()#获得队列中的数据
+                road=algorithm.dijkstra.dijkstra(self.linklist,self.id)#进行dj算法
+                print(road)
             time.sleep(10)#下次发送的延时
 
 
