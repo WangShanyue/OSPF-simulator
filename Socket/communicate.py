@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-
+from PyQt5.QtWidgets import QApplication, QMainWindow
 import time
 from multiprocessing import Process
 import os
@@ -7,19 +7,23 @@ import Socket.Threads
 import queue
 delay = 1
 import algorithm.dijkstra
+import view.mainView
+from view import  *
 
+from PyQt5 import QtCore, QtGui, QtWidgets
 class MyProcess(Process):
     linklist=[]#链路状态表
     link=[]#自身链路状态
     id=0#
     name=''
-    q = queue.Queue(maxsize=1)  # 用来存放Linklist
+    window=object()
+    q = queue.Queue(maxsize=100)  # 用来存放Linklist
     def __init__(self,id,name,link):
         Process.__init__(self)
         self.link=link
         self.id=id
         self.name=name
-
+      #  self.window=window
 
     def run(self):
         global delay
@@ -27,7 +31,7 @@ class MyProcess(Process):
         self.linklist = [[algorithm.dijkstra.INF for col in range(node_num)] for row in range(node_num)]
         for i in range(len(self.link)):
             self.linklist[self.id][self.link[i][0][1]]=self.link[i][1]
-
+    #    self.window.printText("hahah")
      #   print("init link list",self.linklist)
         s=Socket.Threads.ListenThread('localhost', Socket.Threads.BASE_PORT + self.id,self.linklist,self.q)#服务端接收数据
         s.start()
