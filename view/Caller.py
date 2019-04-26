@@ -17,11 +17,8 @@ class myMainWindow(QMainWindow,Ui_Dialog):
 
 
 
-
 if __name__ == "__main__":
 
-    qStr = queue.Queue(maxsize=100)  # 用来存放StrList
-    qRoad = queue.Queue(maxsize=100) # 用来存放 RoadList
 
     app = QApplication(sys.argv)
     window = myMainWindow()
@@ -37,13 +34,12 @@ if __name__ == "__main__":
         process_list.append(Socket.communicate.MyProcess(i, 'Router{num}'.format(num=i), route[i]))
     for i in range(5):
         process_list[i].start()
-    while True:
-        slist=qStr.get()
+
 
     print("主进程终止")
 
-
     sys.exit(app.exec_())
+
 
 
 
