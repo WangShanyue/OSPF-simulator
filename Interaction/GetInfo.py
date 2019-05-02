@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QThread,pyqtSignal
 import socket,time,queue
+import  Structs.TableViewStruct
 
 
 class SubInfoListen(QThread):
@@ -20,8 +21,10 @@ class SubInfoListen(QThread):
                 self.Str = self.conn.recv(1024)  # 接收数据
                 if len(self.Str) != 0:
                     print("received" + self.Str.decode('utf-8'))  # 打印接收到的数据
+                    TableNode=self.Str.split()
+                    id=TableNode[0][0]-48
                     #self.q.put(self.str)    #把接收到的数据放到队列中，向上一级传
-                    self.update_data.emit(0, self.Str.decode('utf-8'))
+                    self.update_data.emit(id, TableNode[1].decode('utf-8'))
             except ConnectionResetError as e:
                 print('关闭了正在占线的链接！')
                 break
@@ -46,9 +49,5 @@ class ExeInfo(QThread):
             sub = SubInfoListen(conn,self.q,self.update_data)
             sub.start()
             time.sleep(0.1)  # 停顿一下，确定能收到数据
-            while (not self.q.empty()):
-                Str = self.q.get()  # 取出子进程的消息
-                print(Str.decode('utf-8'))
-                self.update_data.emit(0,Str.decode('utf-8'))
 
 

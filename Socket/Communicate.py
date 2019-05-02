@@ -6,10 +6,10 @@ import os
 import Socket.Socket_Threads
 import queue
 delay = 1
-import algorithm.dijkstra
-import view.mainView
-from view import  *
-from view import Caller
+import Algorithm.Dijkstra
+import View.MainView
+from View import  *
+from View import Caller
 from PyQt5 import QtCore, QtGui, QtWidgets
 class MyProcess(Process):
     linklist=[]#链路状态表
@@ -30,7 +30,7 @@ class MyProcess(Process):
     def run(self):
         global delay
         node_num=Socket.Socket_Threads.node_num
-        self.linklist = [[algorithm.dijkstra.INF for col in range(node_num)] for row in range(node_num)]
+        self.linklist = [[Algorithm.Dijkstra.INF for col in range(node_num)] for row in range(node_num)]
         for i in range(len(self.link)):
             self.linklist[self.id][self.link[i][0][1]]=self.link[i][1]
     #    self.window.printText("hahah")
@@ -43,7 +43,7 @@ class MyProcess(Process):
             time.sleep(2)#等待接收完毕之后进行dj算法
             if(not  self.q.empty()):#接收数据
                 self.linklist = self.q.get()#获得队列中的数据
-                road=algorithm.dijkstra.dijkstra(self.linklist,self.id)#进行dj算法
+                road=Algorithm.Dijkstra.dijkstra(self.linklist, self.id)#进行dj算法
                 print(road)
                 self.qr.put(road)
             time.sleep(10)#下次发送的延时

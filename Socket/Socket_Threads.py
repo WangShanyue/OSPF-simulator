@@ -2,6 +2,7 @@ from threading import Thread
 import time,random
 import socket
 import queue
+import Structs.TableViewStruct
 delay=1#延迟时间
 BASE_PORT=7999
 node_num=5
@@ -33,10 +34,10 @@ class SubListenThread(Thread):
             try:
                 self.str = self.conn.recv(1024)  # 接收数据
                 if len(self.str) != 0:
-                #    print('{0}recive:'.format(self.id),self.str.decode())  # 打印接收到的数据
                     self.q.put(self.str)    #把接收到的数据放到队列中，向上一级传
-                    self.server.send('{0} 收到来自路由器{1}的消息'.format(self.id,self.str[3]).encode('utf-8'))
-                 #   data='{0} 收到来自路由器{1}的消息'.format(self.id,self.str[3])
+                    num=self.str[3]-48
+                    self.server.send('{1} 收到来自路由器{0}的消息'.format(str(num),self.id).encode('utf-8'))
+                    time.sleep(1)
             except ConnectionResetError as e:
                 print('关闭了正在占线的链接！')
                 break
@@ -105,15 +106,19 @@ class SendThread(Thread):
         global BASE_PORT
         dest=[]
         id=self.port-BASE_PORT
+        viewclient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         for i in range(5):
             if(i==id):
                 continue
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # 声明socket类型，同时生成链接对象
             #print('{}send to {}'.format(id,BASE_PORT+i))
             client.connect((self.ip, BASE_PORT+i))  # 建立一个链接，连接到本地的6969端口
-            msg = self.link  # strip默认取出字符串的头尾空格
+            msg = self.link
             client.send(str(msg).encode('utf-8'))  # 发送一条信息 python3 只接收btye流
-
+            time.sleep(0.1)
+            client.close()
+        viewclient.connect(('localhost',9090))
+        viewclient.send('{0} 链路状态发送完毕'.format(str(self.port-BASE_PORT)).encode('utf-8'))
         # addr = client.accept()
         # print '连接地址：', addr
 
