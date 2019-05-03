@@ -5,7 +5,7 @@ from multiprocessing import Process
 import os
 import Socket.Socket_Threads
 import queue
-delay = 7
+
 import Algorithm.Dijkstra
 import View.MainView
 from View import  *
@@ -18,8 +18,6 @@ class MyProcess(Process):
     name=''
     window=object()
     q = queue.Queue(maxsize=100)  # 用来存放Linklist
-    qs = queue.Queue(maxsize=100)  # 用来存放Linklist
-    qr = queue.Queue(maxsize=100)  # 用来存放Linklist
     def __init__(self,id,name,link):
         Process.__init__(self)
         self.link=link
@@ -28,14 +26,13 @@ class MyProcess(Process):
       #  self.window=window
 
     def run(self):
-        global delay
         node_num=Socket.Socket_Threads.node_num
         self.linklist = [[Algorithm.Dijkstra.INF for col in range(node_num)] for row in range(node_num)]
         for i in range(len(self.link)):
             self.linklist[self.id][self.link[i][0][1]]=self.link[i][1]
     #    self.window.printText("hahah")
      #   print("init link list",self.linklist)
-        s=Socket.Socket_Threads.ListenThread('localhost', Socket.Socket_Threads.BASE_PORT + self.id, self.linklist, self.q, self.qs)#服务端接收数据
+        s=Socket.Socket_Threads.ListenThread('localhost', Socket.Socket_Threads.BASE_PORT + self.id, self.linklist, self.q)#服务端接收数据
         s.start()
         while True:
             c=Socket.Socket_Threads.SendThread('localhost', Socket.Socket_Threads.BASE_PORT + self.id, self.link)
@@ -45,8 +42,7 @@ class MyProcess(Process):
                 self.linklist = self.q.get()#获得队列中的数据
                 road=Algorithm.Dijkstra.dijkstra(self.linklist, self.id)#进行dj算法
                 print(road)
-                self.qr.put(road)
-            time.sleep(delay)#下次发送的延时
+            time.sleep(Socket.Socket_Threads.delay-2)#下次发送的延时
 
 
 

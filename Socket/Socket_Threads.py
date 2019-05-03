@@ -3,10 +3,9 @@ import time,random
 import socket
 import queue
 import Structs.TableViewStruct
-delay=1#延迟时间
 BASE_PORT=7999
 node_num=5
-
+delay = 7
 # class SubSendThread(Thread):
 #     def __init__(self,conn,id,q,qs):
 #         super(SubSendThread, self).__init__()
@@ -29,7 +28,6 @@ class SubListenThread(Thread):
         self.q=q
         self.server=server
     def run(self):
-
         while True:
             try:
                 self.str = self.conn.recv(1024)  # 接收数据
@@ -38,6 +36,7 @@ class SubListenThread(Thread):
                     num=self.str[3]-48
                     self.server.send('{1} 收到来自路由器{0}的消息'.format(str(num),self.id).encode('utf-8'))
                     time.sleep(1)
+                    break#发出去之后就结束自己的线程，节省资源
             except ConnectionResetError as e:
                 print('关闭了正在占线的链接！')
                 break
@@ -47,9 +46,9 @@ class ListenThread(Thread):
     ip=''
     port=0
     linklist = []
-    q = queue.Queue(maxsize=1)#用来传输最短路径树的队列
-    list_queue=queue.Queue(maxsize=100)
-    def __init__(self, ip, port,linklist,q,qs):
+    q = queue.Queue(maxsize=1)#用来传输到上一层链路消息
+    list_queue=queue.Queue(maxsize=100)#用来获取下一层的链路信息
+    def __init__(self, ip, port,linklist,q):
         super(ListenThread,self).__init__()
         self.ip=ip
         self.port=port
