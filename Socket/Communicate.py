@@ -5,7 +5,7 @@ from multiprocessing import Process
 import os
 import Socket.Socket_Threads
 import queue
-delay = 1
+delay = 7
 import Algorithm.Dijkstra
 import View.MainView
 from View import  *
@@ -46,7 +46,7 @@ class MyProcess(Process):
                 road=Algorithm.Dijkstra.dijkstra(self.linklist, self.id)#进行dj算法
                 print(road)
                 self.qr.put(road)
-            time.sleep(10)#下次发送的延时
+            time.sleep(delay)#下次发送的延时
 
 
 

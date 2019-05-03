@@ -71,7 +71,7 @@ class ListenThread(Thread):
             #print("****",conn,"****",addr)
             sub= SubListenThread(conn, self.port - BASE_PORT, self.q,subserver)
             sub.start()
-            time.sleep(0.1)#停顿一下，确定能收到数据
+            time.sleep(0.2)#停顿一下，确定能收到数据
             str=''
             if(not self.q.empty()):
                 str = self.q.get()#取出子进程的数
