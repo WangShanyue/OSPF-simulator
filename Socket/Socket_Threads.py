@@ -2,10 +2,11 @@ from threading import *
 import time,random
 import socket
 import queue
+from Interaction.GetInfo import  VIEW_PORT
 import Structs.TableViewStruct
-BASE_PORT=8565
+BASE_PORT=6565
 node_num=5
-delay = 7
+delay = 10
 # class SubSendThread(Thread):
 #     def __init__(self,conn,id,q,qs):
 #         super(SubSendThread, self).__init__()
@@ -35,7 +36,7 @@ class SubListenThread(Thread):
                 if len(self.str) != 0:
                     self.q.put(self.str)    #把接收到的数据放到队列中，向上一级传
                     num=self.str[3]-48
-                    self.server.send('{1} 收到来自路由器{0}的消息\n'.format(str(num),self.id).encode('utf-8'))
+                    self.server.send('[{1},\'收到来自路由器{0}的消息\']'.format(str(num),self.id).encode('utf-8'))
                     time.sleep(1)
                     break#发出去之后就结束自己的线程，节省资源
 
@@ -61,7 +62,7 @@ class ListenThread(Thread):
 
         global BASE_PORT
         subserver = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        subserver.connect(('localhost', 9090))
+        subserver.connect(('localhost', VIEW_PORT))
 
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #print(self.port)
@@ -118,7 +119,7 @@ class SendThread(Thread):
             client.send(str(msg).encode('utf-8'))  # 发送一条信息 python3 只接收btye流
             time.sleep(0.1)
             client.close()
-        ViewClient.connect(('localhost',9090))
+        ViewClient.connect(('localhost',VIEW_PORT))
         ViewClient.send('[{0},\'链路状态发送完毕\']'.format(str(self.port-BASE_PORT)).encode('utf-8'))
         # addr = client.accept()
         # print '连接地址：', addr
@@ -131,7 +132,7 @@ class SendRouteInfo(Thread):
 
     def run(self):
         ViewClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        ViewClient.connect(('localhost',9090))
+        ViewClient.connect(('localhost',VIEW_PORT))
         ViewClient.send('RouteTables({0},{1},{2},{3})'.format(self.RouteTable.id,self.RouteTable.StepTable,self.RouteTable.DjTree,self.RouteTable.RouteTable).encode('utf-8'))
 
 

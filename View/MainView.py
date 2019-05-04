@@ -180,11 +180,11 @@ class Ui_Dialog(object):
         self.TableList.append(self.tableView_2)
         self.TableList.append(self.tableView_3)
         self.TableList.append(self.tableView_6)
-        self.ButtonList.append(self.pushButton)
         self.ButtonList.append(self.pushButton_2)
-        self.ButtonList.append(self.pushButton_3)
         self.ButtonList.append(self.pushButton_4)
+        self.ButtonList.append(self.pushButton_3)
         self.ButtonList.append(self.pushButton_5)
+        self.ButtonList.append(self.pushButton)
         for i in range(5):
             self.TableList[i].horizontalHeader().setStretchLastSection(True)
             self.TableList[i].horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)

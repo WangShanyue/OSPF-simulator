@@ -22,6 +22,7 @@ def dijkstra(graph,pos):
                 min_num = list[j][1]
                 min_pos = j
         list[min_pos][2] = True
+        ListNoteTable.append(list)
         for i in range(node_num):
             if (list[i][2] == True): continue
             if(list[min_pos][1]+graph[min_pos][i]<list[i][1]):#原点到最小点的距离+最小点到目标点的距离小于原点到目标点的距离
