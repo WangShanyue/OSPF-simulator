@@ -1,31 +1,48 @@
 import sys
+import View
 from View.MainView import *
+from View.SubWindow import *
 from Interaction import ControlProcess
 from PyQt5.QtWidgets import QApplication
 
 import Interaction.GetInfo
-class myMainWindow(QMainWindow,Ui_Dialog):
-    ModelList=[]
-    count=[0,0,0,0,0]
-    def __init__ (self, parent=None):
-        super(myMainWindow,self).__init__(parent)
+class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方法传入最短路径的表格，在里边计算最短路径树和路由表
+    DjTable=[]
+    def __init__(self,parent=None):
+        super(MySubWindow,self).__init__(parent)
         self.setupUi(self)
-        for i in range(5):
+
+    def SetTable(self,table):
+        self.DjTable=table
+
+class MyMainWindow(QMainWindow, Ui_Dialog):
+    ModelList=[]
+    Table_Count=[0, 0, 0, 0, 0]#主窗口中每一个表的
+    def __init__ (self, parent=None):
+        super(MyMainWindow, self).__init__(parent)
+        self.setupUi(self)
+        for i in range(5):#绑定好每个消息窗口
             model=QStandardItemModel(0,0)
             model.setHorizontalHeaderLabels(['路由器{0}的消息窗口'.format(i)])
             self.ModelList.append(model)
             self.TableList[i].setModel(model)
-        self.thread = Interaction.GetInfo.ExeInfo()
-        self.thread.update_data.connect(self.printText)
-        self.thread.setVal()
-    def printText(self,id,text):
-        self.ModelList[id].setItem(self.count[id],0,QStandardItem(text))
+        self.Thread_RInteract = Interaction.GetInfo.ExeInfo()#绑定好线程，用来传路由器之间的交互信息
+        self.Thread_RInteract.update_data.connect(self.PrintText)
+        self.Thread_RInteract.setVal()
+        self.pushButton.clicked.connect(self.OpenSubWind)#给每个按钮绑定响应事件
+        self.pushButton_2.clicked.connect(self.OpenSubWind)
+        self.pushButton_3.clicked.connect(self.OpenSubWind)
+        self.pushButton_4.clicked.connect(self.OpenSubWind)
+        self.pushButton_5.clicked.connect(self.OpenSubWind)
+        self.child=MySubWindow()
+
+    def PrintText(self,id,text):
+        self.ModelList[id].setItem(self.Table_Count[id], 0, QStandardItem(text))
         self.TableList[id].setModel(self.ModelList[id])
-        self.count[id] = self.count[id] + 1  # 列数加一
+        self.Table_Count[id] = self.Table_Count[id] + 1  # 信息记录表的列数加一
 
-
-
-
+    def OpenSubWind(self):
+        self.child.show()
 
 
 
@@ -33,8 +50,10 @@ class myMainWindow(QMainWindow,Ui_Dialog):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = myMainWindow()
+    window = MyMainWindow()
     window.show()
+   # sub=MySubWindow()
+   # sub.show()
     pro=ControlProcess.MainProcess()
     pro.start()
     sys.exit(app.exec_())

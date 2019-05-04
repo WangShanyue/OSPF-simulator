@@ -1,9 +1,9 @@
-from threading import Thread
+from threading import *
 import time,random
 import socket
 import queue
 import Structs.TableViewStruct
-BASE_PORT=7999
+BASE_PORT=8565
 node_num=5
 delay = 7
 # class SubSendThread(Thread):
@@ -31,12 +31,14 @@ class SubListenThread(Thread):
         while True:
             try:
                 self.str = self.conn.recv(1024)  # 接收数据
+
                 if len(self.str) != 0:
                     self.q.put(self.str)    #把接收到的数据放到队列中，向上一级传
                     num=self.str[3]-48
-                    self.server.send('{1} 收到来自路由器{0}的消息'.format(str(num),self.id).encode('utf-8'))
+                    self.server.send('{1} 收到来自路由器{0}的消息\n'.format(str(num),self.id).encode('utf-8'))
                     time.sleep(1)
                     break#发出去之后就结束自己的线程，节省资源
+
             except ConnectionResetError as e:
                 print('关闭了正在占线的链接！')
                 break

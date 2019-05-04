@@ -7,10 +7,6 @@ import Socket.Socket_Threads
 import queue
 
 import Algorithm.Dijkstra
-import View.MainView
-from View import  *
-from View import Caller
-from PyQt5 import QtCore, QtGui, QtWidgets
 class MyProcess(Process):
     linklist=[]#链路状态表
     link=[]#自身链路状态

@@ -4,7 +4,7 @@ import socket,time,queue
 import  Structs.TableViewStruct
 
 
-class SubInfoListen(QThread):
+class SubInfoListen(QThread):#和之前的子监听线程一样，都是建立连接之后开一个新的线程传输数据
     conn = []
     Str= ''
     update_data=pyqtSignal(int, str)
