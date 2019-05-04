@@ -29,11 +29,11 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
         self.Thread_RInteract = Interaction.GetInfo.ExeInfo()#绑定好线程，用来传路由器之间的交互信息
         self.Thread_RInteract.update_data.connect(self.PrintText)
         self.Thread_RInteract.setVal()
-        self.pushButton.clicked.connect(self.OpenSubWind)#给每个按钮绑定响应事件
-        self.pushButton_2.clicked.connect(self.OpenSubWind)
-        self.pushButton_3.clicked.connect(self.OpenSubWind)
-        self.pushButton_4.clicked.connect(self.OpenSubWind)
-        self.pushButton_5.clicked.connect(self.OpenSubWind)
+        QToolTip.setFont(QFont('SansSerif',10))
+        for i in range(5):
+            self.ButtonList[i].clicked.connect(self.OpenSubWind)
+            self.ButtonList[i].setCursor(QCursor(Qt.PointingHandCursor))
+            self.ButtonList[i].setToolTip('点击查看详细信息')
         self.child=MySubWindow()
 
     def PrintText(self,id,text):
