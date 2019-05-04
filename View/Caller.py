@@ -8,20 +8,30 @@ from functools import partial
 from Structs.RouteTables import *
 import Interaction.GetInfo
 class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方法传入最短路径的表格，在里边计算最短路径树和路由表
-    RouteTable=RouteTables()
+    Routes=RouteTables()
     def __init__(self,RouteTable=None,parent=None):
         super(MySubWindow,self).__init__(parent)
         self.setupUi(self)
-        model_RouteTable=QStandardItemModel(0,2)
-        model_RouteTable.setHorizontalHeaderLabels(['下一跳','目的结点'])
-        self.tableView_3.setModel(model_RouteTable)
-        model_StapTable=QStandardItemModel(0,0)
-        model_StapTable.setHorizontalHeaderLabels(['相邻结点', '距离','是否完成'])
-        self.tableView_0.setModel(model_StapTable)
+        self.model_RouteTable=QStandardItemModel(0,2)
+        self.model_RouteTable.setHorizontalHeaderLabels(['下一跳','目的结点'])
+        self.tableView_3.setModel(self.model_RouteTable)
+        self.model_StapTable=QStandardItemModel(0,0)
+        self.model_StapTable.setHorizontalHeaderLabels(['相邻结点', '距离','是否完成'])
+        self.tableView_0.setModel(self.model_StapTable)
     def SetTable(self,table):
-        self.RouteTable=table
-        print(table)
+        self.Routes=table
+        print(self.Routes.id,"  ",str(self.Routes.StepTable[0][0][0]))
 
+        for i in range(len(self.Routes.StepTable)):
+            for j in range(len(self.Routes.StepTable[0])):
+                if(self.Routes.StepTable[i][j][2]==False):
+                    self.model_StapTable.setItem(i, j, "邻接点:{0},距离={1}".format(self.Routes.StepTable[i][j][0],self.Routes.StepTable[i][j][1]))
+        self.tableView_0.setModel(self.model_StapTable)
+
+        # for i in range(len(self.Routes.RouteTable)):
+        #     if i == self.Routes.id : continue
+        #     for j in range(2):
+        #         self.model_RouteTable.setItem(i, j, self.Routes.RouteTable[i][j])
 
 
 
@@ -68,10 +78,9 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
 
 
     def OpenSubWind(self,id):
-        print("id={0}".format(id))
-        if(len(self.RouteTableMap)>0):
+        if(len(self.RouteTableMap)>=4):
             self.child.SetTable(self.RouteTableMap[id])
-        self.child.show()
+            self.child.show()
 
 
 

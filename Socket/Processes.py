@@ -35,7 +35,7 @@ class RoutePrecess(Process):#一个进程代表一个路由器
                 self.linklist = self.q.get()#获得队列中的数据
                 road,Table,Route=Algorithm.Dijkstra.dijkstra(self.linklist, self.id)#进行dj算法
                 print(road)
-                RouteTable=RouteTables.RouteTables(self.id, road, Table, Route)
+                RouteTable=RouteTables.RouteTables(self.id, Table,road , Route)
                 ViewSendThread=Socket.Socket_Threads.SendRouteInfo(RouteTable)
                 ViewSendThread.start()
             time.sleep(Socket.Socket_Threads.delay-2)#下次发送的延时

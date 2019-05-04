@@ -8,7 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
+from PyQt5.QtWidgets import *
 class Ui_Dialog_Sub(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -146,6 +146,12 @@ class Ui_Dialog_Sub(object):
         self.pushButton_3.raise_()
         self.label_8.raise_()
         self.tableView_0.raise_()
+        self.tableView_3.horizontalHeader().setStretchLastSection(True)
+        self.tableView_3.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tableView_3.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tableView_0.horizontalHeader().setStretchLastSection(True)
+        self.tableView_0.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tableView_0.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)

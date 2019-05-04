@@ -4,7 +4,7 @@ import socket
 import queue
 from Interaction.GetInfo import  VIEW_PORT
 import Structs.TableViewStruct
-BASE_PORT=6565
+BASE_PORT=4673
 node_num=5
 delay = 10
 # class SubSendThread(Thread):

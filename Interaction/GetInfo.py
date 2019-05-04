@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QThread,pyqtSignal
 import socket,time,queue
 import  Structs.TableViewStruct
-VIEW_PORT=9798
+VIEW_PORT=9751
 
 class SubInfoListen(QThread):#和之前的子监听线程一样，都是建立连接之后开一个新的线程传输数据
     conn = []
