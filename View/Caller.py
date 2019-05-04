@@ -41,6 +41,10 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
         self.TableList[id].setModel(self.ModelList[id])
         self.Table_Count[id] = self.Table_Count[id] + 1  # 信息记录表的列数加一
 
+    def SovleMessage(self,str):
+        obj=eval(str)
+
+
     def OpenSubWind(self):
         self.child.show()
 

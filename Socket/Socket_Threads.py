@@ -107,7 +107,7 @@ class SendThread(Thread):
         global BASE_PORT
         dest=[]
         id=self.port-BASE_PORT
-        viewclient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ViewClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         for i in range(5):
             if(i==id):
                 continue
@@ -118,14 +118,21 @@ class SendThread(Thread):
             client.send(str(msg).encode('utf-8'))  # 发送一条信息 python3 只接收btye流
             time.sleep(0.1)
             client.close()
-        viewclient.connect(('localhost',9090))
-        viewclient.send('{0} 链路状态发送完毕'.format(str(self.port-BASE_PORT)).encode('utf-8'))
+        ViewClient.connect(('localhost',9090))
+        ViewClient.send('[{0},\'链路状态发送完毕\']'.format(str(self.port-BASE_PORT)).encode('utf-8'))
         # addr = client.accept()
         # print '连接地址：', addr
 
 
+class SendRouteInfo(Thread):
+    def __init__(self, RouteTable):
+        Thread.__init__(self)
+        self.RouteTable = RouteTable
 
-
+    def run(self):
+        ViewClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ViewClient.connect(('localhost',9090))
+        ViewClient.send('RouteTables({0},{1},{2},{3})'.format(self.RouteTable.id,self.RouteTable.StepTable,self.RouteTable.DjTree,self.RouteTable.RouteTable).encode('utf-8'))
 
 
 if __name__ == '__main__':

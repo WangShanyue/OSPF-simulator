@@ -50,4 +50,3 @@ class ExeInfo(QThread):
             sub.start()
             time.sleep(0.1)  # 停顿一下，确定能收到数据
 
-

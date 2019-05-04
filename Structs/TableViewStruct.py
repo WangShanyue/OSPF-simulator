@@ -7,8 +7,9 @@ class TableViewStruct():# 输出到每一个表中的路由器交互信息
         self.Str=str
 
 if __name__ == '__main__':
+    test=''
     if(True):
-        test=str(TableViewStruct(1,'0'))
+        test=str('TableViewStruct(1,\'0\')')
         print(test)
-    obj=eval('TableViewStruct({0},\'{1}\')'.format(1,'123'))
+    obj=eval(test)
     print(obj.Str)

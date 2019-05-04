@@ -1,6 +1,6 @@
 import os,time
 from multiprocessing import Process
-import  Socket.Communicate
+import  Socket.Processes
 
 
 class MainProcess(Process):
@@ -15,7 +15,7 @@ class MainProcess(Process):
                  [[(3, 2), 100]], [[(4, 2), 100]]]  # [[目标结点1，距离1]，[目标结点2，距离2]...]
         process_list = []
         for i in range(5):
-            process_list.append(Socket.Communicate.MyProcess(i, 'Router{num}'.format(num=i), route[i]))
+            process_list.append(Socket.Processes.RoutePrecess(i, 'Router{num}'.format(num=i), route[i]))
         for i in range(5):
             process_list[i].start()
 
