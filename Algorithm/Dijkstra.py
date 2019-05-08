@@ -1,3 +1,4 @@
+import copy
 INF= 214748364
 def dijkstra(graph,pos):
     node_num=len(graph)
@@ -7,8 +8,10 @@ def dijkstra(graph,pos):
   #  print(list)
     for i in range(node_num):#初始化
         list[i]=[pos,graph[pos][i],False]
-        if(i==pos):
-            list[i]=[pos,0,True]
+    list[pos] = [pos, 0, False]
+    ListNoteTable.append(copy.deepcopy(list))
+    list[pos]=[pos,0,True]
+    ListNoteTable.append(copy.deepcopy(list))
     for i in range(node_num):
         if(i==pos):
             continue
@@ -22,17 +25,18 @@ def dijkstra(graph,pos):
                 min_num = list[j][1]
                 min_pos = j
         list[min_pos][2] = True
-        ListNoteTable.append(list)
         for i in range(node_num):
-            if (list[i][2] == True): continue
+            if (list[i][2] == True or list[min_pos][1]>=INF): continue
             if(list[min_pos][1]+graph[min_pos][i]<list[i][1]):#原点到最小点的距离+最小点到目标点的距离小于原点到目标点的距离
                 list[i][1] = list[min_pos][1] + graph[min_pos][i]
                 list[i][0]=min_pos
                 RouteTable[i]=RouteTable[min_pos]
-        ListNoteTable.append(list)
+        temp=copy.deepcopy(list)
+        ListNoteTable.append(temp)
     tree =[[] for col in range(node_num)] #建立空表
     min_pos=0
     print(RouteTable)
+    print(ListNoteTable)
     for i in range(node_num):
         if (i==pos) :continue
         tree[list[i][0]].append(i)

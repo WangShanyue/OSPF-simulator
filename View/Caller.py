@@ -1,38 +1,11 @@
 import sys
-import View
 from View.MainView import *
-from View.SubWindow import *
 from Interaction import ControlProcess
 from PyQt5.QtWidgets import QApplication
 from functools import partial
 from Structs.RouteTables import *
 import Interaction.GetInfo
-class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方法传入最短路径的表格，在里边计算最短路径树和路由表
-    Routes=RouteTables()
-    def __init__(self,RouteTable=None,parent=None):
-        super(MySubWindow,self).__init__(parent)
-        self.setupUi(self)
-        self.model_RouteTable=QStandardItemModel(0,2)
-        self.model_RouteTable.setHorizontalHeaderLabels(['下一跳','目的结点'])
-        self.tableView_3.setModel(self.model_RouteTable)
-        self.model_StapTable=QStandardItemModel(0,0)
-        self.model_StapTable.setHorizontalHeaderLabels(['相邻结点', '距离','是否完成'])
-        self.tableView_0.setModel(self.model_StapTable)
-    def SetTable(self,table):
-        self.Routes=table
-        print(self.Routes.id,"  ",str(self.Routes.StepTable[0][0][0]))
-
-        for i in range(len(self.Routes.StepTable)):
-            for j in range(len(self.Routes.StepTable[0])):
-                if(self.Routes.StepTable[i][j][2]==False):
-                    self.model_StapTable.setItem(i, j, "邻接点:{0},距离={1}".format(self.Routes.StepTable[i][j][0],self.Routes.StepTable[i][j][1]))
-        self.tableView_0.setModel(self.model_StapTable)
-
-        # for i in range(len(self.Routes.RouteTable)):
-        #     if i == self.Routes.id : continue
-        #     for j in range(2):
-        #         self.model_RouteTable.setItem(i, j, self.Routes.RouteTable[i][j])
-
+from View.CallSubWindow import *
 
 
 class MyMainWindow(QMainWindow, Ui_Dialog):

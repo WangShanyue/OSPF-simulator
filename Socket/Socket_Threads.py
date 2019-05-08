@@ -6,7 +6,7 @@ from Interaction.GetInfo import  VIEW_PORT
 import Structs.TableViewStruct
 BASE_PORT=4673
 node_num=5
-delay = 10
+delay = 60
 # class SubSendThread(Thread):
 #     def __init__(self,conn,id,q,qs):
 #         super(SubSendThread, self).__init__()
