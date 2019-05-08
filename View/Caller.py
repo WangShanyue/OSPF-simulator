@@ -41,7 +41,7 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
 
     def ManageMessage(self,str):#
         obj=eval(eval(str))
-        print(type(obj))
+       # print(type(obj))
 
         if(type(obj)==type([])):#根据不同的类型跳转到不同的函数,如果是列表就代表是路由器交互信息
             self.PrintText(obj[0],obj[1])
