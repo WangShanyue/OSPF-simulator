@@ -60,21 +60,26 @@ class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方�
         for i in range(len(DjTree)):
             for j in range(len(DjTree[i])):
                 self.__ShowLine(self.LineTree[i][DjTree[i][j]])
-                self.__ShowRoute(self.RoutesTree[DjTree[i][j]])
+                self.__ShowRoute(self.RoutesTree[DjTree[i][j]],self.labelTable[DjTree[i][j]])
+
         self.RoutesTree[id].setStyleSheet("QPushButton{border-image:url(../images/CurrentRouter.png);}")
         self.RoutesTree[id].show()
+        self.labelTable[id].show()
     def __ShowLine(self,Line):
         for i in range(len(Line)):
             Line[i].show()
 
-    def __ShowRoute(self,route):
+    def __ShowRoute(self,route,lable):
         route.show()
+        lable.show()
+
 
 
     def __Init(self):#所有的线和路由器全部消失
         for i in range(len(self.RoutesTree)):
             self.RoutesTree[i].setStyleSheet("QPushButton{border-image:url(../images/router.png);}")
             self.RoutesTree[i].hide()
+            self.labelTable[i].hide()
         self.line_01.hide()
         self.line_12.hide()
         self.line_13_2.hide()

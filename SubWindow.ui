@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="label_1">
    <property name="geometry">
     <rect>
      <x>330</x>
@@ -26,7 +26,7 @@
     <string>1号路由器</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
      <x>330</x>
@@ -68,9 +68,9 @@
   <widget class="Line" name="line_23_1">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>360</x>
      <y>70</y>
-     <width>381</width>
+     <width>351</width>
      <height>20</height>
     </rect>
    </property>
@@ -130,7 +130,7 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -148,7 +148,7 @@
     <rect>
      <x>40</x>
      <y>70</y>
-     <width>291</width>
+     <width>321</width>
      <height>21</height>
     </rect>
    </property>
@@ -156,7 +156,7 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
      <x>610</x>
@@ -311,14 +311,14 @@
   <zorder>line_24</zorder>
   <zorder>line_12</zorder>
   <zorder>line_01</zorder>
+  <zorder>label_1</zorder>
   <zorder>label_2</zorder>
-  <zorder>label_3</zorder>
   <zorder>label</zorder>
   <zorder>line_13_1</zorder>
   <zorder>line_23_1</zorder>
   <zorder>line_13_2</zorder>
-  <zorder>label_5</zorder>
   <zorder>label_4</zorder>
+  <zorder>label_3</zorder>
   <zorder>line_23_2</zorder>
   <zorder>tableView_3</zorder>
   <zorder>label_6</zorder>
