@@ -20,7 +20,7 @@ class SubInfoListen(QThread):#和之前的子监听线程一样，都是建立�
             try:
                 self.Str = self.conn.recv(1024)  # 接收数据
                 if len(self.Str) != 0:
-                    #print("received" + self.Str.decode('utf-8'))  # 打印接收到的数据
+                    print("received" + self.Str.decode('utf-8'))  # 打印接收到的数据
                     #TableNode=self.Str.split()
                     #id=TableNode[0][0]-48
                     #self.q.put(self.str)    #把接收到的数据放到队列中，向上一级传
@@ -46,7 +46,6 @@ class ExeInfo(QThread):
         server.listen(5)  # 开始监听 表示可以使用五个链接排队
         while True:  # conn就是客户端链接过来而在服务端为期生成的一个链接实例
             conn, addr = server.accept()  # 等待链接,多个链接的时候就会出现问题,其实返回了两个值
-            sub = SubInfoListen(conn,self.q,self.update_data)
-            sub.start()
+            while True:
+                data = self.conn.recv(1024)  # 接收数据
             time.sleep(0.1)  # 停顿一下，确定能收到数据
-

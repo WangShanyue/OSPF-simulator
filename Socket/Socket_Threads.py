@@ -7,7 +7,7 @@ from Interaction.GetInfo import  VIEW_PORT
 import Structs.TableViewStruct
 BASE_PORT=4673
 node_num=5
-delay = 10
+delay = 60
 # class SubSendThread(Thread):
 #     def __init__(self,conn,id,q,qs):
 #         super(SubSendThread, self).__init__()
@@ -92,6 +92,7 @@ class ListenThread(Thread):
                         self.linklist[list_rec[i][0][0]][list_rec[i][0][1]]=list_rec[i][1]
                 if (not self.list_queue.empty()):
                     self.list_queue.get()
+
                 self.list_queue.put(self.linklist)  # 传给上一层
 
 

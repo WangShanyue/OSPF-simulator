@@ -22,24 +22,28 @@ class RoutePrecess(Process):#一个进程代表一个路由器
     def run(self):
         node_num=Socket.Socket_Threads.node_num
         self.linklist = [[Algorithm.Dijkstra.INF for col in range(node_num)] for row in range(node_num)]
-
+        for i in range(len(self.link)):
+            self.linklist[self.id][self.link[i][0][1]] = self.link[i][1]
      #   print("init link list",self.linklist)
         s=Socket.Socket_Threads.ListenThread('localhost', Socket.Socket_Threads.BASE_PORT + self.id, self.linklist, self.q)#服务端接收数据
         s.start()
         while True:
-            for i in range(len(self.link)):
-                self.linklist[self.id][self.link[i][0][1]] = self.link[i][1]
             c=Socket.Socket_Threads.SendThread('localhost', Socket.Socket_Threads.BASE_PORT + self.id, self.link)#发送数据
             c.start()
             time.sleep(2)#等待接收完毕之后进行dj算法
-            if(not  self.q.empty()):#接收数据
-                self.linklist = self.q.get()#获得队列中的数据
-                road,Table,Route=Algorithm.Dijkstra.dijkstra(self.linklist, self.id)#进行dj算法
-                print(road)
-                RouteTable=RouteTables.RouteTables(self.id, Table,road , Route)
-                ViewSendThread=Socket.Socket_Threads.SendRouteInfo(RouteTable)
-                ViewSendThread.start()
-            time.sleep(Socket.Socket_Threads.delay-2)#下次发送的延时
+            for i in range(Socket.Socket_Threads.delay-2):# 下次发送的延时,如果把等待和接受结合到一起，可以实现一改变就发送
+                if(not  self.q.empty()):#接收数据
+                    self.linklist = self.q.get()#获得队列中的数据
+                    road,Table,Route=Algorithm.Dijkstra.dijkstra(self.linklist, self.id)#进行dj算法
+                    print(road)
+                    RouteTable=RouteTables.RouteTables(self.id, Table,road , Route)
+                    ViewSendThread=Socket.Socket_Threads.SendRouteInfo(RouteTable)
+                    ViewSendThread.start()
+                    for i in range(len(self.link)):
+                        self.link[i][1]=self.linklist[self.id][self.link[i][0][1]]
+                    print("We Can get", self.linklist)
+                time.sleep(1)
+
 
     def SetLink(self,link):
         print("id=", self.id, "link=", link)
