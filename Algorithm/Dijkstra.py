@@ -24,8 +24,12 @@ def dijkstra(graph,pos):
             if (min_num > list[j][1]):
                 min_num = list[j][1]
                 min_pos = j
-        if (list[min_pos][1] < INF):
+
+        if (list[min_pos][1] < INF):#如果值太大就退出
             list[min_pos][2] = True
+        else:
+            break
+
         for i in range(node_num):
             if (list[i][2] == True or list[min_pos][1]>=INF): continue
             if(list[min_pos][1]+graph[min_pos][i]<list[i][1]):#原点到最小点的距离+最小点到目标点的距离小于原点到目标点的距离

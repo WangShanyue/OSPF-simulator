@@ -27,12 +27,14 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
         self.Thread_RInteract.setVal()
 
         QToolTip.setFont(QFont('SansSerif',10))
-        for i in range(5):#气泡与小手
+        for i in range(5):#每个路由器加一个监听信号，同时增加气泡与小手
             self.ButtonList[i].clicked.connect(partial(self.OpenSubWind,i))
             self.ButtonList[i].setCursor(QCursor(Qt.PointingHandCursor))
             self.ButtonList[i].setToolTip('点击查看详细信息')
-
+        self.SendButton.clicked.connect(self.StartProject)
+        self.StartProcess = ControlProcess.MainProcess()
         self.child=MySubWindow()
+
 
     def PrintText(self,id,text):
         self.ModelList[id].setItem(self.Table_Count[id], 0, QStandardItem(text))
@@ -55,7 +57,9 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
             self.child.SetTable(self.RouteTableMap[id])
             self.child.show()
 
-
+    def StartProject(self):
+        self.SendButton.setEnabled(False)
+        self.StartProcess.start()
 
 
 
@@ -66,8 +70,7 @@ if __name__ == "__main__":
     window.show()
    # sub=MySubWindow()
    # sub.show()
-    pro=ControlProcess.MainProcess()
-    pro.start()
+
     sys.exit(app.exec_())
 
 

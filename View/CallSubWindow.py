@@ -18,7 +18,7 @@ class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方�
 
 
 
-    def SetTable(self,table):
+    def SetTable(self,table):#根据传进来的结果设置新窗口
         self.__Init()
         self.Routes=table
 
@@ -56,7 +56,7 @@ class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方�
 
 
 
-    def __ShowTree(self,DjTree,id):
+    def __ShowTree(self,DjTree,id):#显示最短路径树
         for i in range(len(DjTree)):
             for j in range(len(DjTree[i])):
                 self.__ShowLine(self.LineTree[i][DjTree[i][j]])
