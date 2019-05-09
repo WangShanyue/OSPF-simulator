@@ -34,14 +34,20 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
             self.ButtonList[i].setCursor(QCursor(Qt.PointingHandCursor))
             self.ButtonList[i].setToolTip('点击查看详细信息')
         self.SendButton.clicked.connect(self.StartProject)#绑定开始发送按钮
-        self.ModifyDistanceButton.clicked.connect(partial(self.GetDistanse,True))
+        self.ModifyDistanceButton.clicked.connect(partial(self.GetDistance,True))
 
-        self.GetDistanse()
+        self.GetDistance()
         self.StartProcess = ControlProcess.MainProcess(self.DistanceList)#开始进程
         self.child=MySubWindow()
 
-    def ManageMessage(self,str):#根据传进来的比特流来进行解码，之后根据不同的类型来判断转到不同的函数
-        obj=eval(eval(str))
+    def ManageMessage(self, Str):#根据传进来的比特流来进行解码，之后根据不同的类型来判断转到不同的函数
+        # obj=eval(Str.encode('utf-8'))
+        # print(obj)
+        # InfoList = str(Str.encode('utf-8')).split("#")
+        # for i in range(len(InfoList)):
+        #     if (InfoList[i] != None):
+        #         print(InfoList[i])
+        obj=eval(eval(Str))
         if(type(obj)==type([])):#根据不同的类型跳转到不同的函数,如果是列表就代表是路由器交互信息
             self.PrintText(obj[0],obj[1])
         elif(type(obj)==type(RouteTables())):#如果是路由器各个表的对象，就代表已经运算完成dj算法，信息已经传到这里来了
@@ -62,10 +68,13 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
             self.child.show()
 
     def StartProject(self):# 开始项目                ——开始按钮
+        self.GetDistance()
+        self.StartProcess.SetRoute(self.DistanceList)
         self.SendButton.setEnabled(False)
         self.StartProcess.start()
 
-    def GetDistanse(self,Change=False):#参数Change代表是不是发生了改变，改变就传给每个进程
+
+    def GetDistance(self,Change=False):#参数Change代表是不是发生了改变，改变就传给每个进程
 
         Distance=[]
         INF=214748364

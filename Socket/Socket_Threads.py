@@ -2,11 +2,12 @@ from threading import *
 import time,random
 import socket
 import queue
+import threading
 from Interaction.GetInfo import  VIEW_PORT
 import Structs.TableViewStruct
 BASE_PORT=4673
 node_num=5
-delay = 60
+delay = 10
 # class SubSendThread(Thread):
 #     def __init__(self,conn,id,q,qs):
 #         super(SubSendThread, self).__init__()
@@ -33,11 +34,15 @@ class SubListenThread(Thread):
             try:
                 self.str = self.conn.recv(1024)  # 接收数据
 
+                threadLock = threading.Lock()
+                threadLock.acquire()
                 if len(self.str) != 0:
                     self.q.put(self.str)    #把接收到的数据放到队列中，向上一级传
                     num=self.str[3]-48
-                    self.server.send('[{1},\'收到来自路由器{0}的消息\']'.format(str(num),self.id).encode('utf-8'))
-                    time.sleep(1)
+                    self.server.send('[{1},\'收到来自路由器{0}的消息\']#'.format(str(num),self.id).encode('utf-8'))#加了个#莫名其妙BUG就好了，看来上天都不想让我放弃吧，加油
+                    time.sleep(0.05)
+                    threadLock.release()
+
                     break#发出去之后就结束自己的线程，节省资源
 
             except ConnectionResetError as e:
@@ -51,10 +56,11 @@ class ListenThread(Thread):
     linklist = []
     q = queue.Queue(maxsize=1)#用来传输到上一层链路消息
     list_queue=queue.Queue(maxsize=100)#用来获取下一层的链路信息
-    def __init__(self, ip, port,q):
+    def __init__(self, ip, port,linklist,q):
         super(ListenThread,self).__init__()
         self.ip=ip
         self.port=port
+        self.linklist=linklist
         self.list_queue=q
 
     def run(self):
@@ -139,5 +145,5 @@ if __name__ == '__main__':
    # t=ListenThread('localhost', 7890)
    # t.start()
    # c = ClintThread('localhost',7890)
-    #c.start()
+   # c.start()
     print('主')

@@ -20,10 +20,16 @@ class MainProcess(Process):
             self.process_list.append(Socket.SubProcesses.RoutePrecess(i, 'Router{num}'.format(num=i), route[i]))
         for i in range(5):
             self.process_list[i].start()
+
     def SetRoute(self,route):
-        self.route=route
+        self.Route=route
         route = [[[(0, 1), self.Route[0]]], [[(1, 0), self.Route[0]], [(1, 2), self.Route[1]], [(1, 3), self.Route[3]]],
                  [[(2, 1), self.Route[1]], [(2, 3), self.Route[2]], [(2, 4), self.Route[4]]],
                  [[(3, 2), self.Route[2]], [(3, 1), self.Route[3]]], [[(4, 2), self.Route[4]]]]
-       # for i in range(5):
-            #self.process_list[i].
+        # for i in range(5):
+        #     self.process_list[i].close()
+        # self.process_list.clear()
+        # for i in range(5):
+        #     self.process_list.append(Socket.SubProcesses.RoutePrecess(i, 'Router{num}'.format(num=i), route[i]))
+        # for i in range(5):
+        #     self.process_list[i].start()
