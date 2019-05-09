@@ -24,7 +24,8 @@ def dijkstra(graph,pos):
             if (min_num > list[j][1]):
                 min_num = list[j][1]
                 min_pos = j
-        list[min_pos][2] = True
+        if (list[min_pos][1] < INF):
+            list[min_pos][2] = True
         for i in range(node_num):
             if (list[i][2] == True or list[min_pos][1]>=INF): continue
             if(list[min_pos][1]+graph[min_pos][i]<list[i][1]):#原点到最小点的距离+最小点到目标点的距离小于原点到目标点的距离
@@ -34,17 +35,22 @@ def dijkstra(graph,pos):
         temp=copy.deepcopy(list)
         ListNoteTable.append(temp)
     tree =[[] for col in range(node_num)] #建立空表
-    min_pos=0
+
+    for i in range(node_num):
+        if(list[i][2]==False):
+            del(RouteTable[i])
+
     print(RouteTable)
     print(ListNoteTable)
-    for i in range(node_num):
-        if (i==pos) :continue
-        tree[list[i][0]].append(i)
 
+    for i in range(node_num):
+        if (i==pos or list[i][2]==False) :continue
+        tree[list[i][0]].append(i)
+    print(tree)
     return tree,ListNoteTable,RouteTable
         #for i in range
 
 if __name__ == '__main__':
-   graph=  [[214748364, 100, 214748364, 214748364, 214748364], [100, 214748364, 100, 214748364, 214748364], [214748364, 100, 214748364, 100, 100], [214748364, 214748364, 100, 214748364, 214748364], [214748364, 214748364, 100, 214748364, 214748364]]
+   graph=  [[214748364, 2147483647, 214748364, 214748364, 214748364], [214748364, 214748364, 100, 214748364, 214748364], [214748364, 100, 214748364, 100, 100], [214748364, 214748364, 100, 214748364, 214748364], [214748364, 214748364, 100, 214748364, 214748364]]
 
    dijkstra(graph,4)
