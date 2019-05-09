@@ -51,11 +51,10 @@ class ListenThread(Thread):
     linklist = []
     q = queue.Queue(maxsize=1)#用来传输到上一层链路消息
     list_queue=queue.Queue(maxsize=100)#用来获取下一层的链路信息
-    def __init__(self, ip, port,linklist,q):
+    def __init__(self, ip, port,q):
         super(ListenThread,self).__init__()
         self.ip=ip
         self.port=port
-        self.linklist=linklist
         self.list_queue=q
 
     def run(self):

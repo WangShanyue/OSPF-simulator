@@ -219,6 +219,13 @@ class Ui_Dialog(object):
         self.EditList.append(self.lineEdit_23)
         self.EditList.append(self.lineEdit_13)
         self.EditList.append(self.lineEdit_24)
+        reg = QRegExp("[0-9]+|inf|INF$")#设置每个空中只能填数字或者inf INF
+        pValidator = QRegExpValidator(self)
+        pValidator.setRegExp(reg)
+        for i in range(len(self.EditList)):
+            self.EditList[i].setValidator(pValidator)
+            self.EditList[i].setText("100")
+
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)

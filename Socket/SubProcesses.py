@@ -22,12 +22,12 @@ class RoutePrecess(Process):#一个进程代表一个路由器
     def run(self):
         node_num=Socket.Socket_Threads.node_num
         self.linklist = [[Algorithm.Dijkstra.INF for col in range(node_num)] for row in range(node_num)]
-        for i in range(len(self.link)):
-            self.linklist[self.id][self.link[i][0][1]]=self.link[i][1]
      #   print("init link list",self.linklist)
-        s=Socket.Socket_Threads.ListenThread('localhost', Socket.Socket_Threads.BASE_PORT + self.id, self.linklist, self.q)#服务端接收数据
+        s=Socket.Socket_Threads.ListenThread('localhost', Socket.Socket_Threads.BASE_PORT + self.id, self.q)#服务端接收数据
         s.start()
         while True:
+            for i in range(len(self.link)):
+                self.linklist[self.id][self.link[i][0][1]] = self.link[i][1]
             c=Socket.Socket_Threads.SendThread('localhost', Socket.Socket_Threads.BASE_PORT + self.id, self.link)#发送数据
             c.start()
             time.sleep(2)#等待接收完毕之后进行dj算法
@@ -40,7 +40,8 @@ class RoutePrecess(Process):#一个进程代表一个路由器
                 ViewSendThread.start()
             time.sleep(Socket.Socket_Threads.delay-2)#下次发送的延时
 
-
+    def SetLink(self,link):
+        self.link=link
 
 
 '''
