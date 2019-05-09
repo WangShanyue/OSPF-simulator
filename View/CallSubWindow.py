@@ -21,6 +21,7 @@ class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方�
     def SetTable(self,table):#根据传进来的结果设置新窗口
         self.__Init()
         self.Routes=table
+        self.setWindowTitle("{0}号路由器的详细信息".format(self.Routes.id))
 
 
         List_Step_Head=[]
@@ -61,10 +62,10 @@ class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方�
             for j in range(len(DjTree[i])):
                 self.__ShowLine(self.LineTree[i][DjTree[i][j]])
                 self.__ShowRoute(self.RoutesTree[DjTree[i][j]],self.labelTable[DjTree[i][j]])
-
         self.RoutesTree[id].setStyleSheet("QPushButton{border-image:url(../images/CurrentRouter.png);}")
         self.RoutesTree[id].show()
         self.labelTable[id].show()
+
     def __ShowLine(self,Line):
         for i in range(len(Line)):
             Line[i].show()

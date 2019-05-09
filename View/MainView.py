@@ -232,7 +232,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "模拟OSPF"))
         self.SendButton.setText(_translate("Dialog", "开始发送"))
         self.label.setText(_translate("Dialog", "0号路由器"))
         self.label_2.setText(_translate("Dialog", "1号路由器"))
