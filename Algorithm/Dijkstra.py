@@ -44,13 +44,10 @@ def dijkstra(graph,pos):
         if(list[i][2]==False):
             del(RouteTable[i])
 
-    print(RouteTable)
-    print(ListNoteTable)
 
     for i in range(node_num):
         if (i==pos or list[i][2]==False) :continue
         tree[list[i][0]].append(i)
-    print(tree)
     return tree,ListNoteTable,RouteTable
         #for i in range
 

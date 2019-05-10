@@ -37,13 +37,13 @@ class RoutePrecess(Process):#一个进程代表一个路由器
                 if(not  self.q.empty()):#接收数据
                     self.linklist = self.q.get()#获得队列中的数据
                     road,Table,Route=Algorithm.Dijkstra.dijkstra(self.linklist, self.id)#进行dj算法
-                    print(road)
-                    RouteTable=RouteTables.RouteTables(self.id, Table,road , Route)
+                    RouteTable=RouteTables.RouteTables(self.id, Table,road , Route)#把数据发送到界面
                     ViewSendThread=Socket.Socket_Threads.SendRouteInfo(RouteTable)
                     ViewSendThread.start()
-                    for i in range(len(self.link)):
+                   # print(self.linklist)
+                    for i in range(len(self.link)):#更新自己的连接信息
                         self.link[i][1]=self.linklist[self.id][self.link[i][0][1]]
-                    print("We Can get", self.linklist)
+                   # print("We Can get", self.link)
                 time.sleep(1)
 
 
@@ -51,17 +51,6 @@ class RoutePrecess(Process):#一个进程代表一个路由器
         print("id=", self.id, "link=", link)
         self.link=link
 
-
-
-'''
-    def test(self):#测试用的函数
-        for i in range(len(self.link)):
-           self.linklist.append([(self.id, self.link[i][0]), self.link[i][1]])  # 获得链路状态表
-
-        for i in range(4):
-            print("id={0},name={1},link={2},linklist={3}".format(self.id,self.name,self.link,self.linklist))
-            time.sleep(0.5)
-'''
 
 def main():
     qs = queue.Queue(maxsize=100)  # 用来存放Linklist

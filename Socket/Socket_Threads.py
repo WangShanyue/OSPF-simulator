@@ -39,7 +39,8 @@ class SubListenThread(Thread):
                 if len(self.str) != 0:
                     self.q.put(self.str)    #把接收到的数据放到队列中，向上一级传
                     num=self.str[3]-48
-                    self.server.send('[{1},\'收到来自路由器{0}的消息\']#'.format(str(num),self.id).encode('utf-8'))#加了个#莫名其妙BUG就好了，看来上天都不想让我放弃吧，加油
+                    if(num!=self.id):
+                        self.server.send('[{1},\'收到来自路由器{0}的消息\']#'.format(str(num),self.id).encode('utf-8'))#加了个#莫名其妙BUG就好了，看来上天都不想让我放弃吧，加油
                     time.sleep(0.05)
                     threadLock.release()
 
@@ -90,6 +91,7 @@ class ListenThread(Thread):
                         break
                     else:
                         self.linklist[list_rec[i][0][0]][list_rec[i][0][1]]=list_rec[i][1]
+                print("id=",self.port-BASE_PORT,"linklist=",self.linklist)
                 if (not self.list_queue.empty()):
                     self.list_queue.get()
 
@@ -116,13 +118,11 @@ class SendThread(Thread):
         id=self.port-BASE_PORT
         ViewClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         for i in range(5):
-            if(i==id):
-                continue
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # 声明socket类型，同时生成链接对象
             #print('{}send to {}'.format(id,BASE_PORT+i))
-            client.connect((self.ip, BASE_PORT+i))  # 建立一个链接，连接到本地的6969端口
+            client.connect((self.ip, BASE_PORT+i))  # 建立一个链接
             msg = self.link
-            client.send(str(msg).encode('utf-8'))  # 发送一条信息 python3 只接收btye流
+            client.send(str(msg).encode('utf-8'))
             time.sleep(0.1)
             client.close()
         ViewClient.connect(('localhost',VIEW_PORT))
