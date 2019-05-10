@@ -40,7 +40,7 @@ class SubListenThread(Thread):
                     self.q.put(self.str)    #把接收到的数据放到队列中，向上一级传
                     num=self.str[3]-48
                     if(num!=self.id):
-                        self.server.send('[{1},\'收到来自路由器{0}的消息\']#'.format(str(num),self.id).encode('utf-8'))#加了个#莫名其妙BUG就好了，看来上天都不想让我放弃吧，加油
+                        self.server.send('[{1},\'收到来自路由器{0}的消息\',{2}]#'.format(str(num),self.id,str(self.str)).encode('utf-8'))#加了个#莫名其妙BUG就好了，看来上天都不想让我放弃吧，加油
                     time.sleep(0.05)
                     threadLock.release()
 
@@ -85,7 +85,7 @@ class ListenThread(Thread):
                 str = self.q.get()#取出子进程的数
                 str1=str[1:len(str)-1].decode()#去掉括号
                 list_rec=list(eval(str1))#获得list
-                for i in range (len(list_rec)):#循环遍历得到linklist数组，从而得到整个图
+                for i in range(len(list_rec)):#循环遍历得到linklist数组，从而得到整个图
                     if (type(list_rec[1]) == int):#有种情况是只有一个列表，那样的话获得的list会有问题，所以就用type判断的方法，找到这种情况
                         self.linklist[list_rec[0][0]][list_rec[0][1]] = list_rec[1]
                         break
@@ -126,7 +126,7 @@ class SendThread(Thread):
             time.sleep(0.1)
             client.close()
         ViewClient.connect(('localhost',VIEW_PORT))
-        ViewClient.send('[{0},\'链路状态发送完毕\']'.format(str(self.port-BASE_PORT)).encode('utf-8'))
+        ViewClient.send('[{0},\'链路状态发送完毕\',{1}]'.format(str(self.port-BASE_PORT),str(self.link)).encode('utf-8'))
         # addr = client.accept()
         # print '连接地址：', addr
 

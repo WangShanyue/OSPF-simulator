@@ -10,7 +10,7 @@ class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方�
     def __init__(self,parent=None):
         super(MySubWindow,self).__init__(parent)
         self.setupUi(self)
-
+        self.setWindowIcon(QIcon('../images/SubWindowIcon.png'))
         self.model_RouteTable.setHorizontalHeaderLabels(['目的结点','后继结点'])
         self.tableView_3.setModel(self.model_RouteTable)
 

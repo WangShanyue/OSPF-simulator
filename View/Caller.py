@@ -15,15 +15,18 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
     RouteTableMap={}
     DistanceList=[]
     DelayTime=0
+    InterInfoTable=[[],[],[],[],[]]#交互信息表
     def __init__ (self, parent=None):
         super(MyMainWindow, self).__init__(parent)
         self.setupUi(self)
+        self.setWindowIcon(QIcon('../images/MainWindowIcon.png'))
         for i in range(5):#绑定好每个消息窗口
             model=QStandardItemModel(0,0)
             model.setHorizontalHeaderLabels(['路由器{0}的消息窗口'.format(i)])
             self.ModelList.append(model)
             self.TableList[i].setModel(model)
             self.TableList[i].setShowGrid(False)
+            self.TableList[i].clicked.connect(partial(self.ShowTableMessage,i))
 
         self.Thread_RInteract = Interaction.GetInfo.ExeInfo()#绑定好线程，用来传路由器之间的交互信息
         self.Thread_RInteract.update_data.connect(self.ManageMessage)
@@ -44,13 +47,17 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
 
     def ManageMessage(self, Str):#根据传进来的比特流来进行解码，之后根据不同的类型来判断转到不同的函数
         obj=eval(eval(Str))
+
         if(type(obj)==type([])):#根据不同的类型跳转到不同的函数,如果是列表就代表是路由器交互信息
+            print(obj)
             self.PrintText(obj[0],obj[1])
+            self.__AppendMessage(obj[2],obj[0])
             self.ModifyDistanceButton.setEnabled(False)
         elif(type(obj)==type(RouteTables())):#如果是路由器各个表的对象，就代表已经运算完成dj算法，信息已经传到这里来了
             self.RouteTableMap[obj.id]=obj
-            self.PrintText(obj.id, "运算完成")
+            self.PrintText(obj.id, "运算完成")#输出到窗口中
             self.ModifyDistanceButton.setEnabled(True)
+            self.InterInfoTable[obj.id].append("运算完成")
 
 
     def PrintText(self,id,text):#输出每一个路由器的交互信息
@@ -96,10 +103,28 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
         if Change :
             self.StartProcess.SetRoute(self.DistanceList,False)
 
-    def SetDelayTime(self):
+    def SetDelayTime(self):#设置发送间隔
         Delay=self.spinBox.value()
         self.DelayTime=Delay
 
+    def ShowTableMessage(self,id,qModelIndex):
+        print(qModelIndex," ",id)
+        QMessageBox.information(self, "详细信息", self.InterInfoTable[id][qModelIndex.row()])
+
+    def __AppendMessage(self,ListInfo,id):#获得具体的信息，放到表中
+        obj = eval(str(ListInfo))
+        if(type(obj)!=type([])):
+            obj=eval(obj)
+        print(obj)
+        Str=self.__DecodeInfo(obj)
+        self.InterInfoTable[id].append(Str)
+
+    def __DecodeInfo(self,List):
+        Str=''
+        for i in range(len(List)):
+            Str+='{0}--{1}-->{2}\n'.format(List[i][0][0],List[i][1],List[i][0][1])
+        print(Str)
+        return Str
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MyMainWindow()
