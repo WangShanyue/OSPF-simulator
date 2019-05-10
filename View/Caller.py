@@ -14,6 +14,7 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
     Table_Count=[0, 0, 0, 0, 0]#主窗口中每一个表的
     RouteTableMap={}
     DistanceList=[]
+    DelayTime=0
     def __init__ (self, parent=None):
         super(MyMainWindow, self).__init__(parent)
         self.setupUi(self)
@@ -66,9 +67,12 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
 
     def StartProject(self):# 开始项目                ——开始按钮
         self.GetDistance()
+        self.SetDelayTime()
         self.StartProcess.SetRoute(self.DistanceList,True)
+        self.ModifyDistanceButton.show()
         self.SendButton.setEnabled(False)
-        self.StartProcess.start()
+        self.spinBox.setEnabled(False)
+        self.StartProcess.setVal(self.DelayTime)
 
 
     def GetDistance(self,Change=False):#参数Change代表是不是发生了改变，改变就传给每个进程
@@ -92,6 +96,9 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
         if Change :
             self.StartProcess.SetRoute(self.DistanceList,False)
 
+    def SetDelayTime(self):
+        Delay=self.spinBox.value()
+        self.DelayTime=Delay
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

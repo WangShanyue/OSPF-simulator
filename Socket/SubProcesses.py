@@ -12,11 +12,13 @@ class RoutePrecess(Process):#一个进程代表一个路由器
     name=''
     window=object()
     q = queue.Queue(maxsize=100)  # 用来存放Linklist
-    def __init__(self,id,name,link):
+    DelayTime=0
+    def __init__(self,id,name,link,delay):
         Process.__init__(self)
         self.link=link
         self.id=id
         self.name=name
+        self.DelayTime=delay
       #  self.window=window
 
     def run(self):
@@ -31,7 +33,7 @@ class RoutePrecess(Process):#一个进程代表一个路由器
             c=Socket.Socket_Threads.SendThread('localhost', Socket.Socket_Threads.BASE_PORT + self.id, self.link)#发送数据
             c.start()
             time.sleep(2)#等待接收完毕之后进行dj算法
-            for i in range(Socket.Socket_Threads.delay-2):# 下次发送的延时,如果把等待和接受结合到一起，可以实现一改变就发送
+            for i in range(self.DelayTime-2):# 下次发送的延时,如果把等待和接受结合到一起，可以实现一改变就发送
                 if(not  self.q.empty()):#接收数据
                     self.linklist = self.q.get()#获得队列中的数据
                     road,Table,Route=Algorithm.Dijkstra.dijkstra(self.linklist, self.id)#进行dj算法
