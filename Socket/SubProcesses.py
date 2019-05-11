@@ -44,6 +44,7 @@ class RoutePrecess(Process):#一个进程代表一个路由器
                     for i in range(len(self.link)):#更新自己的连接信息
                         self.link[i][1]=self.linklist[self.id][self.link[i][0][1]]
                    # print("We Can get", self.link)
+                    #i=0#收到消息之后重新开始计时
                 time.sleep(1)
 
 

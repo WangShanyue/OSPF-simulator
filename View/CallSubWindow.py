@@ -22,7 +22,7 @@ class MySubWindow(QWidget,Ui_Dialog_Sub):#子窗口的类,通过传参数的方�
         self.__Init()
         self.Routes=table
         self.setWindowTitle("{0}号路由器的详细信息".format(self.Routes.id))
-
+        self.model_StapTable.clear()
 
         List_Step_Head=[]
         for i in range(len(self.Routes.StepTable[0])):

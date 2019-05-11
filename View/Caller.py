@@ -109,7 +109,7 @@ class MyMainWindow(QMainWindow, Ui_Dialog):
 
     def ShowTableMessage(self,id,qModelIndex):
         print(qModelIndex," ",id)
-        QMessageBox.information(self, "详细信息", self.InterInfoTable[id][qModelIndex.row()])
+        QMessageBox.about(self, "详细信息", self.InterInfoTable[id][qModelIndex.row()])
 
     def __AppendMessage(self,ListInfo,id):#获得具体的信息，放到表中
         obj = eval(str(ListInfo))

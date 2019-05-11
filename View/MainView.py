@@ -103,7 +103,7 @@ class Ui_Dialog(object):
         self.pushButton_5.setFixedSize(50, 50)
         self.spinBox = QtWidgets.QSpinBox(Dialog)
         self.spinBox.setGeometry(QtCore.QRect(630, 390, 61, 22))
-        self.spinBox.setMinimum(5)
+        self.spinBox.setMinimum(15)
         self.spinBox.setValue(60)
         self.spinBox.setSingleStep(1)
         self.spinBox.setDisplayIntegerBase(10)
